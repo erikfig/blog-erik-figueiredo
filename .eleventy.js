@@ -102,4 +102,7 @@ module.exports = function(eleventyConfig) {
       return related;
     }
   });
+
+  eleventyConfig.addPassthroughCopy({ "assets": "assets" });
+  eleventyConfig.addPassthroughCopy("robots.txt");
 };
