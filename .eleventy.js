@@ -6,12 +6,16 @@ const path = require("path");
 module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(eleventyImageTransformPlugin);
 
+  eleventyConfig.addCollection("post", function(collectionApi) {
+    return collectionApi.getFilteredByGlob("./posts/**/*.md");
+  });
+
   eleventyConfig.addPlugin(feedPlugin, {
 		type: "atom",
 		outputPath: "/feed.xml",
 		collection: {
-			name: "posts",
-			limit: 10,
+			name: "post",
+			limit: 0,
 		},
 		metadata: {
 			language: "pt-BR",
@@ -23,10 +27,6 @@ module.exports = function(eleventyConfig) {
 			}
 		}
 	});
-
-  eleventyConfig.addCollection("post", function(collectionApi) {
-    return collectionApi.getFilteredByGlob("./posts/**/*.md");
-  });
 
   // Filtro para formatar datas por extenso em pt-BR
   eleventyConfig.addNunjucksFilter("dateBR", function(dateObj) {
@@ -50,9 +50,6 @@ module.exports = function(eleventyConfig) {
     return dateObj.getFullYear()
   });
 
-  // Copia a pasta de assets para o diretório de saída
-  eleventyConfig.addPassthroughCopy({ "assets": "assets" });
-  eleventyConfig.addPassthroughCopy("robots.txt");
 
   // Geração dinâmica do sitemap.xml
   eleventyConfig.on('afterBuild', () => {
