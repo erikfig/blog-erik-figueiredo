@@ -1,0 +1,41 @@
+---
+title: Blog Erik Figueiredo
+pagination:
+  data: collections.post
+  size: 10
+  alias: posts
+  reverse: true
+permalink: "{% if pagination.pageNumber == 0 %}/{% else %}/page/{{ pagination.pageNumber + 1 }}/{% endif %}"
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title }}</title>
+  <meta name="description" content="Blog Erik Figueiredo: reflexões, tecnologia, produtividade, carreira e opiniões. Artigos originais sobre desenvolvimento, TI, minimalismo digital e mais." />
+  <link rel="canonical" href="https://blog.erikfigueiredo.com.br{{ page.url }}" />
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+  <meta property="og:title" content="{{ title }}" />
+  <meta property="og:description" content="Blog Erik Figueiredo: reflexões, tecnologia, produtividade, carreira e opiniões. Artigos originais sobre desenvolvimento, TI, minimalismo digital e mais." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://blog.erikfigueiredo.com.br{{ page.url }}" />
+  <meta property="og:image" content="https://blog.erikfigueiredo.com.br/assets/erik-figueiredo.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{{ title }}" />
+  <meta name="twitter:description" content="Blog Erik Figueiredo: reflexões, tecnologia, produtividade, carreira e opiniões. Artigos originais sobre desenvolvimento, TI, minimalismo digital e mais." />
+  <meta name="twitter:image" content="https://blog.erikfigueiredo.com.br/assets/erik-figueiredo.jpg" />
+</head>
+<body>
+  <div class="wrapper">
+    {% include "_partials/header.njk" %}
+    {% include "_partials/header_banner.njk" %}
+    {{ content | safe }}
+    {% include "_partials/post-list.njk" %}
+  </div>
+  
+  {% include "_partials/footer.njk" %}
+</body>
+</html>

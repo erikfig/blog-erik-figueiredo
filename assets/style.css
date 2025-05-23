@@ -1,0 +1,320 @@
+/* Importa Lato e Abril Fatface do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lato:wght@400;700&display=swap');
+
+* {
+  border: none;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  color: inherit;
+}
+
+html {
+  font-family: "Lato", sans-serif;
+  font-size: 10px;
+}
+
+.wrapper {
+  max-width: 1240px;
+  margin: 0 auto;
+  font-size: 1.6rem;
+  padding: 0 40px;
+}
+
+h1, h2, h3, h4 {
+  font-family: "Abril Fatface", serif;
+  font-weight: normal;
+}
+
+h1 {
+  font-size: 5.2rem;
+  color: rgb(23, 52, 90);
+  margin-bottom: 2.4rem;
+}
+
+h2 {
+  font-size: 3.4rem;
+  margin-bottom: 1.6rem;
+}
+
+h3 {
+  font-size: 2.6rem;
+  margin-bottom: 1.2rem;
+}
+
+h4 {
+  font-size: 2rem;
+  margin-bottom: 1.2rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+}
+
+.rounded-image {
+  overflow: hidden;
+  border-radius: 50%;
+  position: relative;
+}
+
+.rounded-image img {
+  position: absolute;
+  top: -60px;
+  left: 0;
+  width: 100%;
+  filter: grayscale(1);
+  transition: filter 0.3s;
+}
+
+.rounded-image img:hover {
+  filter: grayscale(0);
+}
+
+.header ul, .header li {
+  list-style: none;
+}
+
+.header ul {
+  display: flex;
+  gap: 20px;
+}
+
+.header-banner {
+  display: flex;
+  flex-direction: column-reverse;
+  text-align: center;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2.4rem 0 5rem 0;
+}
+
+.posts-container {
+  border-top: 1px solid #eee;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  padding-top: 20px;
+}
+
+.post {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 20px;
+}
+
+.post-description {
+  margin: 1.6rem 0;
+}
+
+.tag {
+  display: inline-block;
+  background-color: rgb(23, 52, 90);
+  color: #fff;
+  border-radius: 15px;
+  padding: 5px 5px 8px 5px;
+  margin: 5px 5px 5px 0;
+}
+
+.post-date {
+  color: #aaa;
+}
+
+.content ul, ol {
+  margin-left: 30px;
+  margin-bottom: 20px;
+}
+
+.content p {
+  margin-bottom: 20px;
+}
+
+.cover-image {
+  width: 100%;
+  max-width: 1200px;
+  aspect-ratio: 3/1;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 2.4rem;
+  overflow: hidden;
+  border-radius: 10px;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  background: #eee;
+}
+
+.cover-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+pre[class*=language-] {
+  margin: 2.5rem 0 !important;
+}
+
+.pagination a {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  margin: 0 0.5rem;
+  background-color: rgb(23, 52, 90);
+  color: #fff;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 1.5rem;
+}
+
+/* Estilos para o footer */
+.site-footer {
+  width: 100%;
+  border-top: 1px solid #eee;
+  color: #17345a;
+  padding: 2.4rem 0 1.2rem 0;
+  text-align: center;
+  font-size: 1.3rem;
+  margin-top: 4rem;
+}
+
+.site-footer a {
+  color: #fff;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+.site-footer a:hover {
+  color: #ffb347;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.related-posts a {
+  color: #17345a;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.related-posts a:hover {
+  background-color: #17345a;
+  color: #fff;
+}
+
+@media (min-width: 600px) {
+  .footer-content {
+    flex-direction: row;
+    gap: 2rem;
+  }
+}
+
+/* Responsividade para mobile */
+@media (max-width: 770) {
+  .wrapper {
+    padding: 0 10px;
+  }
+  .cover-image {
+    border-radius: 0;
+    margin-bottom: 1.2rem;
+  }
+  h1 {
+    font-size: 2.2rem;
+  }
+  h2 {
+    font-size: 1.7rem;
+  }
+  h3 {
+    font-size: 1.3rem;
+  }
+  .posts-container {
+    gap: 12px;
+    padding-top: 10px;
+  }
+}
+
+@media (max-width: 500px) {
+  h1 {
+    font-size: 3.6rem;
+  }
+}
+
+@media (min-width: 770px) {
+  .header-banner {
+    flex-direction: row;
+    text-align: left;
+    margin: 2.4rem 0;;
+  }
+}
+
+.darkmode html, .darkmode body {
+  background: #10131a;
+  color: #e0e6ef;
+}
+.darkmode .wrapper {
+  background: transparent;
+}
+.darkmode h1, .darkmode h2, .darkmode h3 {
+  color: #e0e6ef;
+}
+.darkmode .header, .darkmode .header-banner {
+  background: #10131a;
+}
+.darkmode .post, .darkmode .posts-container {
+  border-color: #22263a;
+}
+.darkmode .tag {
+  background: #23305a;
+  color: #fff;
+}
+.darkmode .post-date {
+  color: #7a8599;
+}
+.darkmode .site-footer {
+  background: #181f2e;
+  color: #e0e6ef;
+  border-top: 1px solid #22263a;
+}
+.darkmode .site-footer a {
+  color: #fff;
+}
+.darkmode .pagination a {
+  background: #23305a;
+  color: #fff;
+}
+.darkmode .pagination a:hover {
+  background: #2d3a6a;
+}
+.darkmode pre[class*=language-] {
+  background: #181f2e !important;
+}
+.darkmode .cover-image {
+  border-color: #22263a;
+}
+
+.darkmode .social-links {
+  background-color: #fff;
+  padding: 0.5rem;
+  border-radius: 15px;
+  align-items: center;
+}
+
+.darkmode .social-links  li {
+  height: 24px;
+}
+
+.darkmode .related-posts a {
+  color: #fff;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.darkmode .related-posts a:hover {
+  background-color: #fff;
+  color: #17345a;
+}

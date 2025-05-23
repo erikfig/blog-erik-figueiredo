@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title }}</title>
+  <link rel="stylesheet" href="/assets/style.css">
+    <!-- Prism.js CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/toolbar/prism-toolbar.min.css">
+  <meta name="description" content="{{ description or 'Artigo do blog Erik Figueiredo sobre tecnologia, carreira, produtividade e desenvolvimento.' }}" />
+  <link rel="canonical" href="https://blog.erikfigueiredo.com.br{{ page.url }}" />
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:title" content="{{ title }}" />
+  <meta property="og:description" content="{{ description or 'Artigo do blog Erik Figueiredo sobre tecnologia, carreira, produtividade e desenvolvimento.' }}" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://blog.erikfigueiredo.com.br{{ page.url }}" />
+  <meta property="og:image" content="{{ image or 'https://blog.erikfigueiredo.com.br/assets/erik-figueiredo.jpg' }}" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{{ title }}" />
+  <meta name="twitter:description" content="{{ description or 'Artigo do blog Erik Figueiredo sobre tecnologia, carreira, produtividade e desenvolvimento.' }}" />
+  <meta name="twitter:image" content="{{ image or 'https://blog.erikfigueiredo.com.br/assets/erik-figueiredo.jpg' }}" />
+</head>
+<body class="line-numbers">
+  <div class="wrapper">
+    {% include "_partials/header.njk" %}
+    <main class="content">
+      <article>
+        <p><a href="/" aria-label="Voltar para a página inicial do blog Erik Figueiredo">← Voltar para o início</a></p>
+
+        {% if title %}
+          <h1>{{ title }}</h1>
+        {% endif %}
+
+        <p>
+          {% if tags %}
+            {% for tag in tags %}
+              <span class="tag"><a href="/tags/{{ tag | slug }}/" aria-label="Ver posts marcados com {{ tag }}">{{ tag }}</a></span>
+            {% endfor %}
+          {% endif %}
+
+          Por {{ author or "Erik Figueiredo" }} - <span class="post-date">{{ date | dateBR }}</span>
+        </p>
+        {{ content | safe }}
+
+        {% if related_posts and (related_posts | length > 0) %}
+        <section class="related-posts" aria-label="Artigos recomendados com base nas tags deste post">
+          <h2>Artigos recomendados</h2>
+          <ul>
+            {% for related_post in related_posts %}
+              <li><a href="{{ related_post.url }}" aria-label="Leia o artigo recomendado: {{ related_post.data.title }}" class="related-link">🡕 {{ related_post.data.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </section>
+        {% endif %}
+
+      </article>
+    </main>
+  </div>
+  
+  <!-- Prism.js JS -->
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-typescript.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+  <script>
+    // Adiciona a classe line-numbers em todos os blocos <pre><code>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('pre > code').forEach(function(code) {
+        code.parentElement.classList.add('line-numbers');
+      });
+    });
+  </script>
+  
+  {% include "_partials/footer.njk" %}
+</body>
+</html>

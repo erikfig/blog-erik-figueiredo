@@ -1,0 +1,34 @@
+<section class="posts-container" aria-label="Lista de posts do blog">
+  {% for post in pagination.items %}
+    <article class="post">
+      <h2><a href="{{ post.url }}" aria-label="Leia o artigo: {{ post.data.title }}">{{ post.data.title }}</a></h2>
+
+      {% if post.data.description %}
+        <p class="post-description">{{ post.data.description }}</p>
+      {% elif post.templateContent %}
+        <p class="post-description">{{ post.templateContent | striptags | truncate(180, true, '...') }}</p>
+      {% endif %}
+
+      <p>
+        {% for tag in post.data.tags %}
+          <span class="tag"><a href="/tags/{{ tag | slug }}/" aria-label="Ver posts marcados com {{ tag }}">{{ tag }}</a></span>
+        {% endfor %}
+        <span class="post-date">
+          {% if post.date %}
+            {{ post.date | dateBR }}
+          {% endif %}
+        </span>
+      </p>
+    </article>
+  {% endfor %}
+
+  <nav class="pagination" aria-label="Paginação de posts">
+    {% if pagination.href.previous %}
+      <a href="{{ pagination.href.previous }}" aria-label="Página anterior">&laquo;</a>
+    {% endif %}
+    Página {{ pagination.pageNumber + 1 }} de {{ pagination.pages.length }}
+    {% if pagination.href.next %}
+      <a href="{{ pagination.href.next }}" aria-label="Próxima página">&raquo;</a>
+    {% endif %}
+  </nav>
+</section>
