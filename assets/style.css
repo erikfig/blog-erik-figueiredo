@@ -332,3 +332,43 @@ pre[class*=language-] {
   background-color: #fff;
   color: #17345a;
 }
+
+.typewriter-container {
+  display: flex;
+  font-family: monospace;
+}
+
+.typewriter-container.styled {
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  color: #e0e6ef;
+  background-color: #10131a;
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+.typewriter {
+  font-family: monospace;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 1px solid #17345a;
+}
+
+.typewriter.styled {
+  border-right: 1px solid #e0e6ef;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}
