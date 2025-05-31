@@ -1,4 +1,3 @@
-
 ---
 title: "Hello World – Muito mais que uma frase"
 description: "Muito além de uma frase clichê, 'Hello, World!' marca o início de toda jornada na programação. Descubra sua origem, simbolismo e por que esse primeiro passo é tão poderoso."
