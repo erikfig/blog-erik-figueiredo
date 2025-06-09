@@ -7,6 +7,10 @@ layout: ../post.njk
 image: https://blog.erikfigueiredo.com.br/assets/posts/hello-world-muito-mais-que-uma-frase.png
 ---
 
+<div class="cover-image">
+  <img src="/assets/posts/hello-world-muito-mais-que-uma-frase.png" alt="Capa do artigo: Hello World – Muito mais que uma frase" width="1200" height="400" loading="lazy" />
+</div>
+
 Todo mundo já viu essa frase: **"Hello, World!"**  
 Parece simples, inofensiva, até boba. Mas na verdade, ela representa o primeiro passo em uma jornada que pode mudar sua vida.
 
