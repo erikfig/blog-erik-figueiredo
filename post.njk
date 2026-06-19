@@ -26,6 +26,34 @@
   <meta name="twitter:title" content="{{ title }}" />
   <meta name="twitter:description" content="{{ description or 'Artigo do blog Erik Figueiredo sobre tecnologia, carreira, produtividade e desenvolvimento.' }}" />
   <meta name="twitter:image" content="{{ image or 'https://blog.erikfigueiredo.com.br/assets/erik-figueiredo.jpg' }}" />
+
+  <!-- JSON-LD: BlogPosting -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": {{ title | dump | safe }},
+    "description": {{ (description or "Artigo do blog Erik Figueiredo sobre tecnologia, carreira, produtividade e desenvolvimento.") | dump | safe }},
+    "image": {{ (image or "https://blog.erikfigueiredo.com.br/assets/erik-figueiredo.jpg") | dump | safe }},
+    "datePublished": "{{ date | dateISO }}",
+    "dateModified": "{{ date | dateISO }}",
+    "author": {
+      "@type": "Person",
+      "name": "{{ author or 'Erik Figueiredo' }}",
+      "url": "https://blog.erikfigueiredo.com.br/"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Erik Figueiredo",
+      "url": "https://blog.erikfigueiredo.com.br/"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://blog.erikfigueiredo.com.br{{ page.url }}"
+    }{% if tags %},
+    "keywords": {{ tags | dump | safe }}{% endif %}
+  }
+  </script>
 </head>
 <body class="line-numbers">
   <div class="wrapper">

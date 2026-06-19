@@ -1,27 +1,23 @@
 ---
-title: "Você está usando Node.js errado? Descubra o poder do Factory Method e mude sua vida!"
-description: "Aprenda como aplicar o padrão Factory Method em Node.js para organizar seu código, evitar classes gigantes e facilitar a manutenção dos seus gateways de pagamento. Veja exemplos práticos e refatoração passo a passo."
+title: "Factory Method em Node.js: organize gateways de pagamento"
+description: "Como aplicar Factory Method em Node.js para organizar código, evitar classes gigantes e simplificar gateways de pagamento. Exemplos práticos em TypeScript."
 date: 2025-05-23
 tags: [nodejs, javascript, factory method, arquitetura, clean code]
 layout: ../post.njk
-image: https://blog.erikfigueiredo.com.br/assets/posts/voce-esta-usand-node-js-errado-descubra-o-poder-do-factory-method-e mude-sua-vida.png
+image: https://blog.erikfigueiredo.com.br/assets/posts/voce-esta-usando-node-js-errado-descubra-o-poder-do-factory-method-e-mude-sua-vida.png
 ---
 
 <div class="cover-image">
-  <img src="/assets/posts/voce-esta-usand-node-js-errado-descubra-o-poder-do-factory-method-e mude-sua-vida.png" alt="Capa do artigo: Como finalmente começar com TDD de forma não forçada" width="1200" height="400" loading="lazy" />
+  <img src="/assets/posts/voce-esta-usando-node-js-errado-descubra-o-poder-do-factory-method-e-mude-sua-vida.png" alt="Capa do artigo: Factory Method em Node.js — organize gateways de pagamento" width="1200" height="400" loading="lazy" />
 </div>
 
-Já se sentiu como um malabarista tentando equilibrar vários métodos diferentes da sua classe no seu projeto Node.js? Cada método com suas próprias peculiaridades, APIs e integrações... Uma bagunça, né? 😵‍💫
+**Factory Method** é um padrão de projeto criacional que delega para subclasses a decisão de qual objeto instanciar, mantendo o código aberto para extensão e fechado para modificação (Open/Closed Principle). Em Node.js, ele resolve elegantemente o problema de classes que crescem sem controle quando você adiciona novos integradores — como gateways de pagamento.
 
-Acredite, você não está sozinho! A maioria dos desenvolvedores começa do jeito "fácil": um monte de métodos, classes gigantescas e um código que mais parece um monstro de Frankenstein. Mas eu te pergunto: até quando você vai suportar essa ZONA? 😤
+Já se sentiu equilibrando vários métodos diferentes na mesma classe Node.js, cada um com sua API e suas peculiaridades? Quando o projeto cresce, essa "classe canivete suíço" vira um problema sério de manutenção.
 
-E se eu te dissesse que existe um jeito de transformar essa bagunça em um código limpo, organizado e... elegante? Sim, meus amigos, eu estou falando do poderoso Factory Method! ✨
+Neste artigo eu mostro como o **Factory Method** resolve esse cenário com um exemplo prático: um sistema de gateways de pagamento (PagSeguro, PayPal, Stripe, Mercado Pago) refatorado passo a passo em TypeScript.
 
-Prepare-se para uma transformação épica! Neste artigo, vou pegar um código cheio de gambiarras e mostrar como o Factory Method pode te salvar dessa loucura. Você nunca mais vai olhar para seus gateways de pagamento da mesma forma! 😎
-
-**Spoiler alert:** sua vida de dev nunca mais será a mesma! 🚀
-
-### A classe problemática
+## A classe problemática
 
 Imagine que você tem a classe a seguir:
 
@@ -81,10 +77,10 @@ Além desse problema óbvio de responsabilidade única, estamos quebrando o prin
 
 Princípio Open/Closed diz que classes, módulos, funções e outras entidades de *software* devem ser abertas para expansão, mas fechadas para modificação.
 
-### O que é Factory method
+## O que é Factory Method
 
 
-Factory method é um padrão de projeto criacional que usa define uma interface para criar objetos em uma superclasse, mas permitindo que as subclasses definam o objeto a ser criado.
+Factory method é um padrão de projeto criacional que define uma interface para criar objetos em uma superclasse, mas permitindo que as subclasses definam o objeto a ser criado.
 
 Em termos não tão técnicos, teremos subclasses que seguem uma *interface*, a superclasse instancia a subclasse, que irá executar a sua implementação e retornar o resultado disso.
 
@@ -142,7 +138,7 @@ class MercadoPagoPayment implements PaymentProvider {
 // Classe Factory Method (a superclasse)
 class PaymentFactory {
   createPayment(gateway: string): PaymentProvider {
-    switch (provider) {
+    switch (gateway) {
       case 'pagSeguro':
         return new PagSeguroPayment();
       case 'paypal':
@@ -225,7 +221,7 @@ class MercadoPagoPayment implements PaymentProvider {
 // Classe Factory Method (a superclasse)
 class PaymentFactory {
   createPayment(gateway: string): PaymentProvider {
-    switch (provider) {
+    switch (gateway) {
       case 'pagSeguro':
         return new PagSeguroPayment();
       case 'paypal':
@@ -247,13 +243,13 @@ paymentFactory.createPayment('pagSeguro').processPayment().then((data: PaymentRe
 paymentFactory.createPayment('paypal').processPayment().then((data: PaymentResult) => console.log(data));
 paymentFactory.createPayment('stripe').processPayment().then((data: PaymentResult) => console.log(data));
 paymentFactory.createPayment('mercadoPago').processPayment().then((data: PaymentResult) => console.log(data));
-``````
+```
 
 E essa injeção de dependências? Não existe?
 
 Em alguns padrões de projeto vemos este tipo de abordagem em que as classes são instanciadas dentro da superclasse, sem injeção externa da dependência, não há uma resposta única que determine que não injetar as classes seja sempre um "erro". Ambas as abordagens têm as suas vantagens e desvantagens, vale falar mais sobre isso em outro momento ou nos comentários.
 
-Mas se você se incomodou, QUE ÓTIMO, sempre da para melhorar.
+Mas se você se incomodou, QUE ÓTIMO, sempre dá para melhorar.
 
 No contexto do factory method, uma injeção de dependências mais atrapalharia do que ajudaria, adicionando uma camada extra de complexidade com a qual não precisamos lidar, mas eu ficaria muito mais confortável se a minha factory seguisse a ideia que já apresentei do Open/Closed Principle, por isso criei um objeto de registro das classes, que eu posso atualizar "de fora" da factory e nunca precisar abrir ela para expandir as suas funcionalidades.
 
@@ -403,9 +399,26 @@ Na primeira execução utilizamos o exemplo assíncrono e o segundo de forma sí
 
 A diferença é que de forma assíncrona todos são executados ao mesmo tempo, e a ordem de retorno do *log* é por "quem é mais rápido", por isso o PayPal é o primeiro a retornar.
 
-No resultado síncrono, os métodos são executados um após o outro, aguardando o anterior finalizar antes de seguir para o próximo, por isso a ordem é a de execução, por isso o PagSeguro é o primeiro e retornar.
+No resultado síncrono, os métodos são executados um após o outro, aguardando o anterior finalizar antes de seguir para o próximo, por isso a ordem é a de execução, por isso o PagSeguro é o primeiro a retornar.
 
-### Ainda da para melhorar mais
+## Perguntas frequentes sobre Factory Method em Node.js
+
+**O que é Factory Method?**
+É um padrão de projeto criacional que define uma interface comum para criar objetos, deixando que subclasses decidam qual classe concreta instanciar.
+
+**Quando usar Factory Method em vez de instanciar a classe diretamente?**
+Quando você tem várias implementações de uma mesma "ideia" (ex: gateways de pagamento, drivers de banco, providers de notificação) e quer adicionar novas sem mexer nas existentes.
+
+**Factory Method é o mesmo que Abstract Factory?**
+Não. Factory Method cria UM produto por subclasse. Abstract Factory cria FAMÍLIAS de produtos relacionados. Para gateways simples, Factory Method é suficiente.
+
+**Por que usar `classMap` em vez de `switch case`?**
+Porque permite registrar novas implementações sem abrir o código da Factory — respeitando o Open/Closed Principle.
+
+**Factory Method ajuda na testabilidade?**
+Sim. Como cada implementação fica isolada em sua própria classe, fica muito mais fácil mockar ou testar uma por vez — combina bem com práticas como [TDD](/posts/como-finalmente-comecar-com-tdd-de-forma-nao-forcada/).
+
+## Ainda dá para melhorar mais
 
 Sim! Se você aliar o Factory Method a um Proxy, vamos conseguir voltar ao formato de execução inicial, fazendo com que cada subclasse seja utilizada como um método da classe Factory, assim:
 
@@ -420,4 +433,10 @@ payment.mercadoPago().then((data) => console.log(data));
 
 Na utilização parece ser uma única classe, mas por baixo dos panos estamos chamando as subclasses em vez de métodos, "is magic".
 
-Mas isso é só um gostinho do que vamos falar no próximo artigo, dependendo do desempenho desse.
+**TL;DR:**
+- Factory Method centraliza a criação de objetos sob uma interface comum.
+- Cada provedor vira uma classe isolada, mais fácil de testar e manter.
+- Usar um `classMap` no lugar de `switch` mantém o Open/Closed Principle vivo.
+- Próximo passo: combinar com Proxy para reaproveitar a sintaxe original `payment.pagSeguro()`.
+
+Mas isso é só um gostinho do que vamos falar no próximo artigo, dependendo do desempenho deste aqui.

@@ -42,6 +42,15 @@ module.exports = function(eleventyConfig) {
   });
 
 
+  eleventyConfig.addNunjucksFilter("dateISO", function(dateObj) {
+    if (!dateObj) return '';
+    if (dateObj === 'now') {
+      dateObj = new Date();
+    }
+    return new Date(dateObj).toISOString();
+  });
+
+
   eleventyConfig.addNunjucksFilter("currentYear", function(dateObj) {
     if (!dateObj) return '';
     if (dateObj === 'now') {
@@ -105,4 +114,7 @@ module.exports = function(eleventyConfig) {
 
   eleventyConfig.addPassthroughCopy({ "assets": "assets" });
   eleventyConfig.addPassthroughCopy("robots.txt");
+
+  eleventyConfig.ignores.add(".tmp/**");
+  eleventyConfig.ignores.add("dev/**");
 };
