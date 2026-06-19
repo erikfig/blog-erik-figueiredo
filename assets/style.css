@@ -373,3 +373,7 @@ pre[class*=language-] {
     border-color: transparent;
   }
 }
+
+h2 a:hover {
+  color: #FB5058;
+}
