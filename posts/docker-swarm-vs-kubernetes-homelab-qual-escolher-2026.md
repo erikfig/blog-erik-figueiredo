@@ -7,39 +7,51 @@ layout: ../post.njk
 image: https://blog.erikfigueiredo.com.br/assets/posts/docker-swarm-vs-kubernetes-homelab-qual-escolher-2026.png
 ---
 
-Um projeto que tenho trabalhado com muito afinco nos últimos tempos é na construção do meu homelab, ainda sonho com um setup elaborado, capaz de rodar uma llm forte e ter acesso e muito espaço em disco e uma GPU poderosa pra todo o tipo de processamento, mas o que tenho hoje já é bem interessante pra mim, mas claro, estou devagando.
+<div class="cover-image">
+  <img src="/assets/posts/docker-swarm-vs-kubernetes-homelab-qual-escolher-2026.png" alt="Capa do artigo: Docker Swarm vs Kubernetes no homelab — qual escolher em 2026" width="1200" height="400" loading="lazy" />
+</div>
+
+Pra rodar serviços em casa, **Docker Swarm vence Kubernetes na maioria dos casos**: a curva de aprendizado é uma fração da do K8s, consome muito menos RAM, gerencia stacks com um `docker stack deploy`, e não exige cluster control plane separado. Kubernetes só compensa no homelab se o objetivo é **aprender K8s pro trabalho**.
+
+**TL;DR:**
+- Docker Swarm tem curva ~1/10 da do Kubernetes pra colocar um serviço no ar.
+- Roda confortável em Raspberry Pi; K8s puro em homelab pede 3+ nodes parrudos.
+- Stacks reaproveitam o `docker-compose.yml` que você já conhece.
+- K8s só vale se o objetivo é aprender K8s — não pra rodar self-hosted em casa.
+
+Um projeto que tenho trabalhado com muito afinco nos últimos tempos é na construção do meu homelab, ainda sonho com um setup elaborado, capaz de rodar uma llm forte e ter acesso e muito espaço em disco e uma GPU poderosa pra todo o tipo de processamento, mas o que tenho hoje já é bem interessante pra mim, mas claro, estou DIVAGANDO.
 
 O grande ponto aqui é porque eu tomei a INSANA decisão de escolher o Swarm ao Kubernetes.
 
 ## O que é o Docker Swarm
 
-O Docker Swarm é uma ferramenta nativa do Docker focada em orquestração de containeres, agrupando multiplos servidores (físicos ou virtuais) em um cluster distribuído.
+O Docker Swarm é uma ferramenta nativa do Docker focada em orquestração de containers, agrupando multiplos servidores (físicos ou virtuais) em um cluster distribuído.
 
-Na prática, ele gerencia os seus containeres, replica em um ou vários servidores e mantém um serviço no ar mesmo se o serviço crashar e cair, subindo de novo.
+Na prática, ele gerencia os seus containers, replica em um ou vários servidores e mantém um serviço no ar mesmo se o serviço crashar e cair, subindo de novo.
 
-A maior vantagem dele é ja vir junto do Docker nativamente (dispensando instalações externas) e você poder usar seu próprio docker-compose.yml para configurá-lo, já que as configs adicionais do yaml apenas são ignoradas pelo  Docker Compose.
+A maior vantagem dele é já vir junto do Docker nativamente (dispensando instalações externas) e você poder usar seu próprio docker-compose.yml para configurá-lo, já que as configs adicionais do yaml apenas são ignoradas pelo Docker Compose.
 
-A desvantagem óbvia é que ele é demasiadamente simples perto do poder do K8S e isso somando ao fato do investimento que a própria Docker faz no Kubernetes ao invés de apostar na ferramenta nativa o torna o irmão menor que ninguém quer brincar.
+A desvantagem óbvia é que ele é demasiadamente simples perto do poder do K8s e isso somando ao fato do investimento que a própria Docker faz no Kubernetes ao invés de apostar na ferramenta nativa o torna o irmão menor que ninguém quer brincar.
 
 Mas não subestimem o Swarm, ele tem seu valor.
 
 ## O que é Kubernetes
 
-O Kubernetes (ou K8s - o 8 são as 8 letras entre K e s *ubernete*) é o CARA! Assim como o Swarm, ele gerencia multiplos servidores, orquestra os containeres para melhor aproveitamento dos recursos do servidor, e mantendo os pods (seus serviços em containeres) saúdaveis (disponíveis).
+O Kubernetes (ou K8s — o 8 representa as 8 letras entre K e s, *ubernete*) é o CARA! Assim como o Swarm, ele gerencia multiplos servidores, orquestra os containers para melhor aproveitamento dos recursos do servidor, e mantendo os pods (seus serviços em containers) saudáveis (disponíveis).
 
 Na prática, ele é claramente superior ao Swarm, tem autoscaling real, extensibilidade maior, storage avançado, rede e segurança MUITO superiores, observabilidade e scheduling... tudo é superior! Não tem o que discutir. Além de ser open-source e ter uma comunidade MUITO maior. Fato! É superior e PRONTO!
 
 Claro que tudo isso tem um preço e a desvantagem óbvia é que ele é mais pesado, mais complexo de usar e... desnecessário!
 
-Não num contexto geral, desnecessário no meu contexto... Eu usaria ele simplesmente para o que já uso o Swarm, manter meus containeres UP e distribuidos entre os diferentes nós (cada servidor é um nó).
+Não num contexto geral, desnecessário no meu contexto... Eu usaria ele simplesmente para o que já uso o Swarm, manter meus containers UP e distribuidos entre os diferentes nós (cada servidor é um nó).
 
 ## O Docker Swarm está morrendo?
 
-Pra começar, vale relembrar do Docker Swarm original, que realmente foi descontinuado lá em meados de 2015. Esse cara morreu mesmo, ele era uma ferramenta a parte do Docker. Em seu lugar surgiu o Swarm mode que usamos hoje, parte do Docker principal.
+Pra começar, vale relembrar do Docker Swarm original, que realmente foi descontinuado lá em meados de 2015/2016. Esse cara morreu mesmo, ele era uma ferramenta a parte do Docker. Em seu lugar surgiu o Swarm mode que usamos hoje, parte do Docker principal.
 
 Quando te disserem que o Swarm morreu, bem... não estão inteiramente errados ou mentindo, esse "Docker standalone" realmente morreu!
 
-Em 2017 a Mirantis comprou a Docker Enterprise e anuncinou que o Kubernetes seria o orquestrador principal daqui pra frente, eu não lembro bem se existiu um anúncio real ou se foi "hype da comunidade", mas a conversa que rolava na internet é que o Swarm morreria em 2 anos e o K8s era o caminho, muita gente "abondonou o barco" e foi pro K8s definitivamente, inclusive este que vos escreve!
+Em 2017 a Mirantis comprou a Docker Enterprise e anunciou que o Kubernetes seria o orquestrador principal daqui pra frente, eu não lembro bem se existiu um anúncio real ou se foi "hype da comunidade", mas a conversa que rolava na internet é que o Swarm morreria em 2 anos e o K8s era o caminho, muita gente "abandonou o barco" e foi pro K8s definitivamente, inclusive este que vos escreve!
 
 O que eu lembro bem foi que em 2020 a Mirantis anunciou que o suporte ao Swarm continuaria e que, em levantamento deles, existiam MUITOS servidores rodando o Swarm, que novos recursos chegariam com o tempo, além de manutenção e correção de segurança.
 
@@ -49,19 +61,19 @@ A Mirantis anunciou em 2025 que o suporte ao Swarm vai se estender por mais 5 an
 
 Além disso, ele recebeu suporte a CSI (Container Storage Interface), constraints de recursos e outros itens de roadmap, tirando o Swarm do limbo de "só manutenção".
 
-O ponto mais forte de todos é que a própria comunidade em volta dos orquestradores de containeres vem discutindo a real vantagem do K8s, que a única features real que ele tem sobre o Swarm é o autoscaling e que o resto só é mais parrudo e isso ainda cobra o preço em cima da performance (não necessariamente concordo com tudo, tá...).
+O ponto mais forte de todos é que a própria comunidade em volta dos orquestradores de containers vem discutindo a real vantagem do K8s, que a única feature real que ele tem sobre o Swarm é o autoscaling e que o resto só é mais parrudo e isso ainda cobra o preço em cima da performance (não necessariamente concordo com tudo, tá...).
 
-Minha opinião real é que eu acho que o K8s é mais poderoso que o Swarm sim e tudo bem, não faz o Swarm menos necessário no contexto geral, ele é uma forma SIMPLES de orquestrar containeres... as vezes é só o que precisamos.
+Minha opinião real é que eu acho que o K8s é mais poderoso que o Swarm sim e tudo bem, não faz o Swarm menos necessário no contexto geral, ele é uma forma SIMPLES de orquestrar containers... as vezes é só o que precisamos.
 
 Eu trabalho com PHP desde 2 mil e não quero falar quanto... e desde o primeiro dia dizem que ele vai morrer, de verdade, não acredito nisso de que é fácil de matar uma tecnologia. Vida longa ao Swarm!
 
-## Porque escolhi o Swarm no meu cluster?
+## Por que escolhi o Swarm no meu cluster?
 
 Se fosse pra resumir tudo em uma palavra? Eu diria SIMPLICIDADE!
 
 O Docker Swarm é simples de usar, tem uma curva de aprendizado menor, menos problemas pra lidar e já estava disponível.
 
-Eu tomei a decisão conciente de montar um cluster de Raspberry PIs 5 8gb (Raspberrie PIs, Raspberrys PIs... como é o plural disso?), queria baixo custo de energia e lidar com ARM, mas dai é assunto pra outro dia... o fato é que eles não são lá muito fortes e eu só tenho 2 (depois que comprie o preço disparou).
+Eu tomei a decisão consciente de montar um cluster de Raspberry PIs 5 8gb (Raspberrie PIs, Raspberrys PIs... como é o plural disso?), queria baixo custo de energia e lidar com ARM, mas dai é assunto pra outro dia... o fato é que eles não são lá muito fortes e eu só tenho 2 (depois que comprei o preço disparou).
 
 Somando esse cenário eu comecei a escrever os arquivos de configuração para o K3s...
 
@@ -71,28 +83,28 @@ Pera... K3s? Daonde isso apareceu?
 
 O K3s é o Kubernetes da Rancher/SUSE e uma excelente opção ao Swarm, tem bom suporte a ARM, é só componentes e runtime do K8s, bem leve mesmo.
 
-> Inclusive o nome K8s é uma brincadeira com ele ser metade do K8s (5 lestras a menos).
+> Inclusive o nome K3s é uma brincadeira com ele ser metade do K8s (5 letras a menos).
 
-Ele ocupa o mesmo lugar do Swarm (eu considero um concorrente real, o K8s não concorre com o Swarm, são para fins distintos), mesmo que o Swarm ainda consuma MUITOS menos que o K3s (convenhamos, o Swam sai de graça rodando em cima do Docker, não da pra competir).
+Ele ocupa o mesmo lugar do Swarm (eu considero um concorrente real, o K8s não concorre com o Swarm, são para fins distintos), mesmo que o Swarm ainda consuma MUITO menos que o K3s (convenhamos, o Swarm sai de graça rodando em cima do Docker, não dá pra competir).
 
 Então eu pensei muito, e se meu homelab crescer? Talvez um servidor parrudo de verdade... migrar do Swarm pro Kubernetes é uma coisa extremamente chata de fazer ("Claude, migra meus serviços do swarm pro k8s e não cometa erros"), o K3s tem a mesma API, e isso quer dizer ZERO reescrita de arquivos de configuração. É um ponto válido!
 
-No fim eu fui pela simplicidade do Swarm, menos coisas pra escrever, mais simples de gerar um template pra IA alterar depois e ainda tem a realidade da minha vida
+No fim eu fui pela simplicidade do Swarm, menos coisas pra escrever, mais simples de gerar um template pra IA alterar depois e ainda tem a realidade da minha vida:
 
  - Meu trabalho
- - Subir serviços rápidamente no homelab (ainda vou recomendar alguns serviços self-hosted aqui)
+ - Subir serviços rapidamente no homelab (ainda vou recomendar alguns serviços self-hosted aqui)
  - Criar meus projetinhos do zero
  - Família
- 
-Quanto menos eu tiver que escrever ou me preocupar MELHOR, o Kubernetes é bem verboso, o Swarm tem meia duzia de opções a mais (e opcionais) no Docker Compose e ainda tem o gancho: Swarm já está lá, ele vem com o Docker.
 
-Com esse pensamento o Swarm ficou obvio, eu já vou escrever o docker-compose.yml pra testar tudo antes do deploy, então porque não aproveitar isso num primeiro momento e depois eu migro.
+Quanto menos eu tiver que escrever ou me preocupar, MELHOR. O Kubernetes é bem verboso, o Swarm tem meia dúzia de opções a mais (e opcionais) no Docker Compose e ainda tem o gancho: Swarm já está lá, ele vem com o Docker.
+
+Com esse pensamento o Swarm ficou óbvio, eu já vou escrever o docker-compose.yml pra testar tudo antes do deploy, então porque não aproveitar isso num primeiro momento e depois eu migro.
 
 Nada como uma promessa de melhoria futura ou uma gambiarra temporária... não que o Swarm seja gambiarra, não foi o que eu quis dizer.
 
 No fim eu fiquei com o Swarm mesmo, tenho um cluster com (atualmente) pouco mais de 50 services rodando com MUITA coisa que eu preciso.
 
-Para o futuro, não sei se escapo, o Swarm caminha de vagar, meio-morto e meio-vivo (um vampiro praticamente), o K3s vai vir em algum tempo, provavelmente, mas não vou matar a tecnologia ANTES da hora.
+Para o futuro, não sei se escapo, o Swarm caminha devagar, meio-morto e meio-vivo (um vampiro praticamente), o K3s vai vir em algum tempo, provavelmente, mas não vou matar a tecnologia ANTES da hora.
 
 ## A estrada até aqui
 
@@ -101,11 +113,11 @@ There'll be peace when you are done
 Lay your weary head to rest
 Don't you cry no more"
 
-A verdade é que eu sou zero desapego com "modinha", tanto que nem sei se o que é modinha atualmente, mas com foco REAL no que eu preciso:
+A verdade é que eu sou zero desapego com "modinha", tanto que nem sei o que é modinha atualmente, mas com foco REAL no que eu preciso:
 
  - Preciso distribuir meus serviços entre 2 PI5
  - Não preciso gastar alguns megas a mais pra fazer isso
- - Não preciso da complexidade das configurações o Kubernetes
+ - Não preciso da complexidade das configurações do Kubernetes
  - Não preciso dos recursos adicionais do Kubernetes
 
 Pra que usar algo que traz recursos que eu NÃO PRECISO e me cobra por isso em desempenho? Não faz sentido, mesmo que ele morra em 5 anos... nem sei se os Raspberrys duram tanto... não sei nem se eu duro.
@@ -118,7 +130,7 @@ E isso fecha minha análise sobre porque eu decidi pelo Swarm ao K8S... vamos de
 
 Chega de papo, bora pôr a mão na massa. A ideia aqui é a mais simples possível: subir um "Olá, mundo!" nos dois orquestradores e sentir na prática a diferença de cerimônia entre eles.
 
-Não vou abordar instalação, primeiro que eu confio na sua capacidade, segundo que o Swarm ja deve estar instalado ai, né?
+Não vou abordar instalação, primeiro que eu confio na sua capacidade, segundo que o Swarm já deve estar instalado aí, né?
 
 Primeiro a gente cria um app bem bobo só pra ter o que subir:
 
@@ -254,6 +266,23 @@ Não é preguiça e não é o K3s, K8s, Kubernetes (ou como você queira chamar)
 
 Vai crescer? Quer aprender K8s? Precisa de uma feature que o Swarm não tem? -> Kubernetes.
 
-Que simplificidade? Ta entrando agora no mundo da orquestração de containeres? -> Vai de Swarm.
+Quer simplicidade? Tá entrando agora no mundo da orquestração de containers? -> Vai de Swarm.
 
 E boa sorte no seu caminho.
+
+## Perguntas frequentes
+
+**Docker Swarm está morto?**
+Não. O Swarm standalone (de 2014) morreu em 2016 com a chegada do Swarm mode integrado ao Docker. A Mirantis confirmou em 2025 que o suporte vai até 2030, com novos recursos como CSI no roadmap.
+
+**K3s não resolve o problema do K8s pesado?**
+Resolve metade — fica leve o suficiente pra rodar em ARM, mas ainda traz a curva de aprendizado do Kubernetes. Pra homelab que só precisa orquestrar containers, o Swarm continua mais simples.
+
+**É fácil migrar de Swarm pra Kubernetes depois?**
+É chato, mas não impossível. Se você já planeja crescer, K3s evita a migração porque mantém a API do K8s. Se simplicidade é prioridade hoje, Swarm primeiro e migra depois quando precisar.
+
+**Posso rodar Swarm e Kubernetes no mesmo cluster?**
+Sim, em nós separados (ou VMs separadas). Não dá pra rodar os dois no mesmo nó ao mesmo tempo.
+
+<!-- TODO: trocar pelo link real do pillar quando publicar -->
+Decidiu por Swarm? O próximo passo é montar a stack completa: [guia completo de homelab DevOps com Swarm](#) — Traefik como ingress, Gitea como source of truth, bancos compartilhados e pipelines de deploy.
