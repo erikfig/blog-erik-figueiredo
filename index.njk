@@ -28,6 +28,8 @@ permalink: "{% if pagination.pageNumber == 0 %}/{% else %}/page/{{ pagination.pa
   <meta name="twitter:title" content="{{ title }}" />
   <meta name="twitter:description" content="Blog Erik Figueiredo: reflexões, tecnologia, produtividade, carreira e opiniões. Artigos originais sobre desenvolvimento, TI, minimalismo digital e mais." />
   <meta name="twitter:image" content="https://blog.erikfigueiredo.com.br/assets/erik-figueiredo.jpg" />
+
+  {% include "_partials/analytics.njk" %}
 </head>
 <body>
   <div class="wrapper">
