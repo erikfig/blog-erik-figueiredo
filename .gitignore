@@ -1,6 +1,11 @@
 # Node modules
 node_modules/
 
+# Yarn 4 (Berry) — manter .yarnrc.yml versionado, ignorar caches
+.yarn/install-state.gz
+.yarn/cache/
+.pnp.*
+
 # Build output
 _site/
 .cache
